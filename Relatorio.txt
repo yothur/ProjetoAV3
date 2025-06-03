@@ -1,0 +1,2 @@
+ID: 1 | Origem: 1 | Destino: 2 | Data: 23/02/2025 | Horário: 23:59h | Vagas: 22 | Valor: R$23 | Passageiros: ['igris@gmail.com'] | Total: R$23.0
+VALOR DE TODAS AS CARONAS R$23.0
