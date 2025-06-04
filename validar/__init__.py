@@ -110,7 +110,7 @@ def validar_data(data):
         dia = int(dia)
         mes = int(mes)
         ano = int(ano)
-        if ano > 2025 or ano < 1930:
+        if ano > 2025 or ano < 2010:
             print('ANO INVALIDO!')
             return False
         elif mes > 12:
@@ -283,7 +283,7 @@ def encontrar_carona(caronas,usuarios,email_user,motoristas):
                         valor_com_desconto=valor_original
                     pago = input('DIGITE O VALOR A SER PAGO NA PASSAGEM: ').strip()
                     while not validar_valor(pago):
-                        pago=input('VALOR INVÁLIDO. DIGITE NOVAMENTE: ').strip()
+                        pago = input('VALOR INVÁLIDO. DIGITE NOVAMENTE: ').strip()
                     pagar = float(pago)
                     if pagar == valor_com_desconto:
                         caronas[id_reserva_int]['Vagas'] = int(caronas[id_reserva_int]['Vagas']) - 1
