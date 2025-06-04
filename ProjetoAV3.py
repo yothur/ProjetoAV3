@@ -22,6 +22,7 @@ while True:
             senha = input('DIGITE UMA SENHA: ').strip()
         usuarios[email] = {'Email': email, 'Senha': senha, 'Nome': nome, 'Reservas': []}
         salvar_usuarios(usuarios)
+        tirar_foto()
         print('CADASTRO REALIZADO COM SUCESSO!')
     elif op == 2:
             email_user = input('DIGITE SEU LOGIN: ').strip()

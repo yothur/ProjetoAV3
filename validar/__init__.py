@@ -1,5 +1,7 @@
 import time
 from arquivos import salvar_relatorio
+import cv2
+from datetime import datetime
 
 def validar_nome(nome):
     nao_pode = ['(', ')', '[', ']', '{', '}', '<', '>', ',', ';', ':', '\\', '"', "'", '`', '\t', '\n', '!', '#',
@@ -420,3 +422,25 @@ def finalizar_carona(caronas, motoristas, email_user):
     motoristas[email_user]['Caronas'].remove(finalizar)
     del caronas[finalizar]
     print('CARONA FINALIZADA COM SUCESSO!')
+
+
+def tirar_foto():
+    foto = input('GOSTARIA DE TIRAR UMA FOTO?[S/N]: ').upper().strip()
+    while foto not in 'SN':
+        print('DIGITE UMA OPÇÃO VÁLIDA!')
+        foto = input('GOSTARIA DE TIRAR UMA FOTO?[S/N]: ').upper().strip()
+    if foto == 'S':
+        cam = cv2.VideoCapture(0)
+        resultado, imagem = cam.read()
+        cam.release()
+        if resultado:
+            agora = datetime.now().strftime("%Y%m%d_%H%M%S")
+            nome_arquivo = f"foto_{agora}.jpg"
+            cv2.imwrite(nome_arquivo, imagem)
+            print('TIRANDO FOTO...')
+            cv2.waitKey(2000)
+            cv2.destroyAllWindows()
+            return True
+    else:
+        print('TUDO BEM!')
+        return False
