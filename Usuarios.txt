@@ -1,5 +1,2 @@
 rene@gmail.com;rene12345;rene de sousa
-arthur4@gmail.com;12345678;arthur
-igrito@gmail.com;12345678;arthur
-arthurgren4@gmail.com;12345678;arthur
-art@gmail.com;12345678;arthur
+arthur1@gmail.com;12345678;arthur

@@ -425,11 +425,12 @@ def finalizar_carona(caronas, motoristas, email_user):
 
 
 def tirar_foto():
-    foto = input('GOSTARIA DE TIRAR UMA FOTO?[S/N]: ').upper().strip()
+    foto = input('GOSTARIA DE TIRAR UMA FOTO?[S/N] (A FOTO SERA TIRADA ASSIM QUE VOCÊ DIGITAR [S]): ').upper().strip()
     while foto not in 'SN':
         print('DIGITE UMA OPÇÃO VÁLIDA!')
-        foto = input('GOSTARIA DE TIRAR UMA FOTO?[S/N]: ').upper().strip()
+        foto = input('GOSTARIA DE TIRAR UMA FOTO?[S/N] (A FOTO SERA TIRADA ASSIM QUE VOCÊ DIGITAR [S]): ').upper().strip()
     if foto == 'S':
+        print('TIRANDO FOTO...')
         cam = cv2.VideoCapture(0)
         resultado, imagem = cam.read()
         cam.release()
@@ -437,8 +438,7 @@ def tirar_foto():
             agora = datetime.now().strftime("%Y%m%d_%H%M%S")
             nome_arquivo = f"foto_{agora}.jpg"
             cv2.imwrite(nome_arquivo, imagem)
-            print('TIRANDO FOTO...')
-            cv2.waitKey(2000)
+            cv2.waitKey(1000)
             cv2.destroyAllWindows()
             return True
     else:
