@@ -9,6 +9,7 @@ def menu1():
         print('[1] - CADASTRAR USUÁRIO ')
         print('[2] - FAZER LOGIN ')
         print('[3] - SAIR DO PROGRAMA ')
+        print('[4] - MENU DE ADMIN')
         print()
         print('-=' * 13)
         print()
@@ -17,7 +18,7 @@ def menu1():
         if op.isdigit():
             return int(op)
         else:
-            print('OPÇÃO INVÁLIDA! DIGITE 1, 2 OU 3.')
+            print('OPÇÃO INVÁLIDA! DIGITE 1, 2, 3 OU 4.')
 
 
 def menu2():
@@ -46,3 +47,25 @@ def menu2():
             return int(op2)
         else:
             print('OPÇÃO INVÁLIDA! DIGITE 0, 1, 2, 3, 4, 5, 6, 7, 8 OU 9')
+
+
+def menu3():
+    while True:
+        print('-=' * 14)
+        print()
+        print('[BEM-VINDO AO MENU DE ADMIN!]    ')
+        print()
+        print('-=' * 14)
+        print()
+        print('[1] - REMOVER USUARIO ')
+        print('[2] - CADASTRAR MOTORISTA ')
+        print('[3] - VOLTAR')
+        print()
+        print('-=' * 14)
+        print()
+        op3 = input('DIGITE A OPÇÃO DESEJADA ^-^: ')
+        print()
+        if op3.isdigit():
+            return int(op3)
+        else:
+            print('OPÇÃO INVÁLIDA! DIGITE 1, 2 OU 3')

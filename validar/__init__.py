@@ -19,8 +19,8 @@ def validar_nome(nome):
     return True
 
 
-def validar_email(usuarios, email):
-    if email in usuarios:
+def validar_email(usuarios, email, adm):
+    if email in usuarios or email in adm:
         print('O EMAIL JA EXISTE!')
         return False
     nao_pode = ['(', ')', '[', ']', '{', '}', '<', '>', ',', ';', ':', '\\', '"', "'", '`', ' ', '\t', '\n', '!', '#',
@@ -64,22 +64,12 @@ def validar_login(usuarios, email_user, senha_user):
     return False
 
 
-def validar_motorista(usuarios, email_user, motoristas:dict):
-    while True:
-        if email_user in motoristas:
-            return True
-        elif email_user not in motoristas:
-            se_tornar_motorista = input('PARA CADASTRAR UMA CARONA, VOCÊ DEVE SE TORNAR UM MOTORISTA, GOSTARIA DE CONTINUAR?[S/N]: ').upper()[0].strip()
-            while se_tornar_motorista not in 'SN':
-                print('DIGITE UMA OPÇÃO VALIDA!')
-                se_tornar_motorista = input('PARA CADASTRAR UMA CARONA, VOCÊ DEVE SE TORNAR UM MOTORISTA, GOSTARIA DE CONTINUAR?[S/N]: ').upper()[0].strip()
-            if se_tornar_motorista == 'S':
-                motoristas[email_user] = {'Nome': usuarios[email_user]['Nome'], 'Caronas': []}
-                print('AGORA VOCÊ É UM MOTORISTA, CADASTRE SUA CARONA!')
-                return True
-            elif se_tornar_motorista == 'N':
-                return False
-
+def validar_motorista(email_user, motoristas:dict):
+    if email_user in motoristas:
+        return True
+    else:
+        print('VOCÊ PRECISA SER UM MOTORISTA PRA CADASTRAR UMA CARONA!')
+        return False
 
 def validar_local(local):
     if local == '':
@@ -161,7 +151,7 @@ def validar_horario(horario):
         hora, min = horario.split(':')
         for parte in hora, min:
             for caractere in parte:
-                if caractere not in '0123456789':
+                if not caractere.isdigit():
                     print('HORA INVALIDA!. USE APENAS NÚMEROS!')
                     return False
         hora, min = int(hora), int(min)
@@ -182,8 +172,8 @@ def validar_vaga(vagas):
         print('VAGA INVALIDA!. USE APENAS NÚMEROS (NÃO USE VALORES QUEBRADOS)!')
         return False
     vaga_convertida = int(vagas)
-    if vaga_convertida <= 0:
-        print('NÃO PODE TER 0 VAGAS!')
+    if vaga_convertida <= 0 or vaga_convertida > 25:
+        print('NÃO PODE TER ESSA QUANTIDADE DE VAGAS!')
         return False
     return True
 
@@ -414,11 +404,20 @@ def finalizar_carona(caronas, motoristas, email_user):
     if finalizar not in motoristas[email_user]['Caronas']:
         print('ESSA CARONA NÃO É SUA!')
         return False
-    print('FINALIZANDO CARONA', end='', flush=True)
-    for _ in range(3):
-        time.sleep(0.7)
-        print('.', end='', flush=True)
-    print()
+    print('      /|||\\_______\\', flush=True)
+    print('     |             | []\\__', flush=True)
+    print('     |     RDZ     |       )', flush=True)
+    print('    .=--(o)--(o)------(o)--=', flush=True)
+    time.sleep(0.7)
+    print('       /|||\\_______\\', flush=True)
+    print('      |             | []\\__', flush=True)
+    print('      |     RDZ     |       )', flush=True)
+    print('    ..=--(o)--(o)------(o)--=', flush=True)
+    time.sleep(0.7)
+    print('        /|||\\_______\\', flush=True)
+    print('       |             | []\\__', flush=True)
+    print('       |     RDZ     |       )', flush=True)
+    print('    ...=--(o)--(o)------(o)--=', flush=True)
     motoristas[email_user]['Caronas'].remove(finalizar)
     del caronas[finalizar]
     print('CARONA FINALIZADA COM SUCESSO!')
@@ -444,3 +443,39 @@ def tirar_foto():
     else:
         print('TUDO BEM!')
         return False
+
+
+def login_adm(adm):
+    email_adm = input('DIGITE O EMAIL DE ADMIN: ').strip()
+    senha_adm = input('DIGITE SUA SENHA DE ADMIN: ').strip()
+    if email_adm in adm and senha_adm in adm[email_adm]['Senha']:
+        print(f'LOGIN REALIZADO COM SUCESSO, BEM-VINDO SR.{adm[email_adm]['Nome'].upper()}!')
+        return True
+    else:
+        return False
+
+def remover_usuario(usuarios):
+    apagar_usuario = input('DIGITE O EMAIL DO USUARIO QUE VOCÊ QUER REMOVER: ').strip()
+    if apagar_usuario in usuarios:
+        del usuarios[apagar_usuario]
+        file1 = open('Usuarios.txt', 'w')
+        for email in usuarios:
+            u = usuarios[email]
+            linha = f'{u['Email']};{u['Senha']};{u['Nome']}\n'
+            file1.write(linha)
+        file1.close()
+        print(f'USUARIO DELETADO COM SUCESSO, SOBROU{usuarios}')
+    else:
+        print('ESSE USUARIO NÃO EXISTE')
+        return False
+
+
+def cadastrar_motorista(usuarios, motoristas):
+    cadastro_motorista = input('DIGITE O EMAIL DO MOTORISTA QUE VOCÊ QUER CADASTRAR: ').strip()
+    if cadastro_motorista not in usuarios:
+        print('ESSE USUARIO NÃO EXISTE')
+        return False
+    else:
+        motoristas[cadastro_motorista] = {'Nome': usuarios[cadastro_motorista]['Nome'], 'Caronas': []}
+        print('AGORA ESSE USUARIO É UM MOTORISTA')
+        return True

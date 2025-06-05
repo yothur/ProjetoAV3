@@ -1,12 +1,13 @@
 from validar import *
 from menus import *
 from arquivos import *
-usuarios = {'rene@gmail.com':{'Email': 'rene@gmail.com','Senha': 'rene12345', 'Nome': 'rene de sousa', 'Reservas': []}}
+usuarios = {'rene@gmail.com':{'Email': 'rene@gmail.com','Senha': 'rene12345', 'Nome': 'rene de sousa', 'Reservas': []}, 'igris@gmail.com': {'Email': 'igris@gmail.com','Senha': 'igritochad', 'Nome': 'igrito', 'Reservas': []} }
 arquivo = open('Usuarios.txt', 'a')
 arquivo.close()
 carregar_usuarios(usuarios)
+adm = {'mrarthur@gmail.com':{'Email': 'mrarthur@gmail.com','Senha': 'arthur12345', 'Nome': 'arthur'}}
 caronas = {}
-motoristas = {}
+motoristas = {'igris@gmail.com': {'Nome': 'igrito', 'Caronas': []} }
 carona_id = 1
 while True:
     op = menu1()
@@ -15,7 +16,7 @@ while True:
         while not validar_nome(nome):
             nome = input('DIGITE O SEU NOME NOVAMENTE: ').strip()
         email = input('DIGITE SEU EMAIL: ').strip()
-        while not validar_email(usuarios, email):
+        while not validar_email(usuarios, email, adm):
             email = input('DIGITE SEU EMAIL: ').strip()
         senha = input('DIGITE UMA SENHA: ').strip()
         while not validar_senha(senha):
@@ -34,7 +35,7 @@ while True:
                 while True:
                     op2 = menu2()
                     if op2 == 1:
-                        if not validar_motorista(usuarios, email_user, motoristas):
+                        if not validar_motorista(email_user, motoristas):
                             continue
                         local = input('DIGITE O LOCAL DE ORIGEM DA CARONA: ').strip()
                         while not validar_local(local):
@@ -82,3 +83,16 @@ while True:
     elif op == 3:
         print('ATÉ OUTRA HORA <3')
         break
+    elif op == 4:
+        if not login_adm(adm):
+            print('LOGIN INCORRETO!')
+            continue
+        while True:
+            op3 = menu3()
+            if op3 == 1:
+                remover_usuario(usuarios)
+            elif op3 == 2:
+                cadastrar_motorista(usuarios, motoristas)
+            elif op3 == 3:
+                print('VOLTE SEMPRE SR!')
+                break
