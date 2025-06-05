@@ -485,6 +485,9 @@ def cadastrar_motorista(usuarios, motoristas):
     if cadastro_motorista not in usuarios:
         print('ESSE USUARIO NÃO EXISTE')
         return False
+    elif cadastro_motorista in motoristas:
+        print('ESSE USUARIO JA É UM MOTORISTA')
+        return False
     else:
         motoristas[cadastro_motorista] = {'Nome': usuarios[cadastro_motorista]['Nome'], 'Senha': usuarios[cadastro_motorista]['Senha'], 'Caronas': []}
         print('AGORA ESSE USUARIO É UM MOTORISTA')

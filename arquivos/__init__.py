@@ -28,4 +28,4 @@ def salvar_relatorio(motoristas, email_user, caronas):
             total = f'VALOR DE TODAS AS CARONAS R${totalizador}\n'
             file2.write(texto2)
             file2.write(total)
-    file2.close
+    file2.close()
