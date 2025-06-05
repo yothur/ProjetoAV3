@@ -8,8 +8,9 @@ def menu1():
         print()
         print('[1] - CADASTRAR USUÁRIO ')
         print('[2] - FAZER LOGIN ')
-        print('[3] - SAIR DO PROGRAMA ')
+        print('[3] - MENU DO MOTORISTA')
         print('[4] - MENU DE ADMIN')
+        print('[0] - SAIR DO PROGRAMA ')
         print()
         print('-=' * 13)
         print()
@@ -18,38 +19,60 @@ def menu1():
         if op.isdigit():
             return int(op)
         else:
-            print('OPÇÃO INVÁLIDA! DIGITE 1, 2, 3 OU 4.')
+            print('OPÇÃO INVÁLIDA! DIGITE 0, 1, 2, 3 OU 4.')
 
 
 def menu2():
     while True:
         print('-=' * 10)
         print()
-        print('  [MENU DO USUÁRIO]  ')
+        print('  [MENU DO USUARIO]  ')
         print()
         print('-=' * 10)
         print()
-        print('[1] - CADASTRAR CARONA ')
-        print('[2] - LISTAR CARONAS DISPONÍVEIS ')
-        print('[3] - BUSCAR E RESERVAR CARONA')
-        print('[4] - CANCELAR RESERVA [ PASSAGEIRO ]')
-        print('[5] - REMOVER CARONA [ MOTORISTA ]')
-        print('[6] - SUAS CARONAS [ MOTORISTA ]')
-        print('[7] - SUAS RESERVAS [ PASSAGEIRO ]')
-        print('[8] - RELATORIO TOTALIZADOR [ MOTORISTA ]')
-        print('[9] - FINALIZAR CARONA [ SIMULAÇÃO <3 ]')
+        print('[1] - LISTAR CARONAS DISPONÍVEIS ')
+        print('[2] - BUSCAR E RESERVAR CARONA')
+        print('[3] - CANCELAR RESERVA')
+        print('[4] - SUAS RESERVAS')
         print('[0] - LOGOUT ')
         print()
         print('-=' * 10)
+        print()
         op2 = input('ESCOLHA A OPÇÃO DESEJADA ^-^: ')
         print()
         if op2.isdigit():
             return int(op2)
         else:
-            print('OPÇÃO INVÁLIDA! DIGITE 0, 1, 2, 3, 4, 5, 6, 7, 8 OU 9')
+            print('OPÇÃO INVÁLIDA! DIGITE 0, 1, 2, 3, OU 4.')
 
 
 def menu3():
+    while True:
+        print('-=' * 12)
+        print()
+        print('  [MENU DO MOTORISTA]  ')
+        print()
+        print('-=' * 12)
+        print()
+        print('[1] - CADASTRAR CARONA ')
+        print('[2] - REMOVER CARONA')
+        print('[3] - SUAS CARONAS')
+        print('[4] - RELATORIO TOTALIZADOR')
+        print('[5] - FINALIZAR CARONA [ SIMULAÇÃO <3 ]')
+        print('[0] - LOGOUT ')
+        print()
+        print('-=' * 12)
+        print()
+        op3 = input('ESCOLHA A OPÇÃO DESEJADA ^-^: ')
+        print()
+        if op3.isdigit():
+            return int(op3)
+        else:
+            print('OPÇÃO INVÁLIDA! DIGITE 0, 1, 2, 3, 4, OU 5.')
+
+
+
+def menu4():
     while True:
         print('-=' * 14)
         print()
@@ -59,13 +82,13 @@ def menu3():
         print()
         print('[1] - REMOVER USUARIO ')
         print('[2] - CADASTRAR MOTORISTA ')
-        print('[3] - VOLTAR')
+        print('[0] - VOLTAR')
         print()
         print('-=' * 14)
         print()
-        op3 = input('DIGITE A OPÇÃO DESEJADA ^-^: ')
+        op4 = input('DIGITE A OPÇÃO DESEJADA ^-^: ')
         print()
-        if op3.isdigit():
-            return int(op3)
+        if op4.isdigit():
+            return int(op4)
         else:
-            print('OPÇÃO INVÁLIDA! DIGITE 1, 2 OU 3')
+            print('OPÇÃO INVÁLIDA! DIGITE O, 1 OU 2.')

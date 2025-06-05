@@ -19,8 +19,8 @@ def validar_nome(nome):
     return True
 
 
-def validar_email(usuarios, email, adm):
-    if email in usuarios or email in adm:
+def validar_email(usuarios, email, adm, motoristas):
+    if email in usuarios or email in adm or email in motoristas:
         print('O EMAIL JA EXISTE!')
         return False
     nao_pode = ['(', ')', '[', ']', '{', '}', '<', '>', ',', ';', ':', '\\', '"', "'", '`', ' ', '\t', '\n', '!', '#',
@@ -64,11 +64,18 @@ def validar_login(usuarios, email_user, senha_user):
     return False
 
 
-def validar_motorista(email_user, motoristas:dict):
-    if email_user in motoristas:
+def validar_motorista(email_user, senha_user, motoristas:dict):
+    if email_user in motoristas and motoristas[email_user]['Senha'] == senha_user:
         return True
     else:
-        print('VOCÊ PRECISA SER UM MOTORISTA PRA CADASTRAR UMA CARONA!')
+        print('VOCÊ PRECISA SER UM MOTORISTA PRA ENTRAR AQUI!')
+        return False
+
+def validar_nao_motorista(email_user, motorista:dict):
+    if email_user not in motorista:
+        return True
+    else:
+        print('VOCÊ NÃO PODE ENTRAR NO MENU DE USUARIOS SENDO MOTORISTA!')
         return False
 
 def validar_local(local):
@@ -212,19 +219,23 @@ def validar_carona_disponivel(caronas, motoristas):
         disponivel = caronas[carona_disponivel]
         print(f'ID: {carona_disponivel} | Origem: {disponivel['Local']} | Destino: {disponivel['Destino']} | Data: {disponivel['Data']} | Horário: {disponivel['Horario']}h | Vagas: {disponivel['Vagas']} | Valor: R${disponivel['Valor']} | Motorista: {motoristas[disponivel['Motorista']]['Nome']}')
 
-
-def encontrar_carona(caronas,usuarios,email_user,motoristas):
-    if email_user in motoristas:
-        print('VOCÊ NÃO PODE BUSCAR CARONAS COMO MOTORISTA!')
-        return False
-    buscar_local = input('DIGITE O LOCAL: ').strip()
+def validar_buscar_local(buscar_local):
     if buscar_local == '':
         print('VOCÊ PRECISA DIGITAR UM LOCAL!')
         return False
-    buscar_destino = input('DIGITE O DESTINO QUE QUER BUSCAR: ').strip()
+
+
+def validar_buscar_destino(buscar_destino):
     if buscar_destino == '':
         print('VOCÊ PRECISA DIGITAR UM DESTINO!')
         return False
+
+
+def encontrar_carona(caronas,usuarios,email_user,motoristas):
+    buscar_local = input('DIGITE O LOCAL: ').strip()
+    validar_buscar_local(buscar_local)
+    buscar_destino = input('DIGITE O DESTINO QUE QUER BUSCAR: ').strip()
+    validar_buscar_destino(buscar_destino)
     for carona_ld in caronas:
         dados = caronas[carona_ld]
         if dados['Local'] == buscar_local and dados['Destino'] == buscar_destino:
@@ -252,11 +263,11 @@ def encontrar_carona(caronas,usuarios,email_user,motoristas):
                         print('ID INVÁLIDO! CARONA NÃO ENCONTRADA.')
                         return False
                     dados_reserva = caronas[id_reserva_int]
+                    if email_user in dados_reserva['Passageiros']:
+                        print('VOCÊ JA RESERVOU ESSA CARONA')
+                        return False
                     if dados_reserva['Vagas'] == 0:
                         print('NÃO É POSSÍVEL RESERVAR. TODAS AS VAGAS JÁ FORAM PREENCHIDAS!')
-                        return False
-                    if dados_reserva['Motorista'] == email_user:
-                        print('VOCÊ NÃO PODE FAZER UMA RESERVA SENDO MOTORISTA!')
                         return False
                     reserva_email = input('DIGITE O EMAIL DO MOTORISTA: ').strip()
                     data_carona = input('DIGITE A DATA DA CARONA [DD/MM/AAAA]: ').strip()
@@ -299,20 +310,24 @@ def encontrar_carona(caronas,usuarios,email_user,motoristas):
     return False
 
 
-def cancelar_reserva(email_user, usuarios, caronas, motoristas):
-    if email_user in motoristas:
-        print('VOCÊ NÃO PODE CANCELAR UMA RESERVA SENDO MOTORISTA!')
+def cancelar_reserva(email_user, usuarios, caronas):
+    id_cancelar = input('DIGITE O ID DA CARONA QUE VOCÊ QUER CANCELAR A RESERVA: ').strip()
+    if not id_cancelar.isdigit():
+        print('ID INVÁLIDO! DEVE SER UM NÚMERO INTEIRO.')
         return False
-    email_passageiro = input('DIGITE O SEU EMAIL PARA CANCELAR A RESERVA: ').strip()
-    if email_user == email_passageiro:
-        for id_carona in caronas:
-            dados = caronas[id_carona]
+    int_cancelar = int(id_cancelar)
+    if int_cancelar not in caronas:
+        print('ID INVÁLIDO! CARONA NÃO ENCONTRADA.')
+        return False
+    email_cancelar = input('DIGITE SEU EMAIL PARA CANCELAR A RESERVA: ').strip()
+    if email_user == email_cancelar:
+            dados = caronas[int_cancelar]
             if email_user in dados['Passageiros']:
                 dados['Passageiros'].remove(email_user)
                 dados['Vagas'] += 1
-                if id_carona in usuarios[email_user]['Reservas']:
-                    usuarios[email_user]['Reservas'].remove(id_carona)
-                print(f'RESERVA CANCELADA! ID Carona: {id_carona} | VAGAS AGORA: {dados['Vagas']}')
+                if int_cancelar in usuarios[email_user]['Reservas']:
+                    usuarios[email_user]['Reservas'].remove(int_cancelar)
+                print(f'RESERVA CANCELADA! ID Carona: {int_cancelar} | VAGAS AGORA: {dados['Vagas']}')
                 return True
             else:
                 print('VOCÊ NÃO POSSUI NENHUMA RESERVA PARA CANCELAR.')
@@ -323,9 +338,6 @@ def cancelar_reserva(email_user, usuarios, caronas, motoristas):
 
 
 def remover_carona(caronas, motoristas, email_user):
-    if email_user not in motoristas:
-        print('VOCÊ PRECISA SER UM MOTORISTA PARA REMOVER A CARONA!')
-        return False
     data_remover = input('DIGITE A DATA DA CARONA QUE VOCÊ QUER REMOVER [DD/MM/AAAA]: ').strip()
     for carona_id in motoristas[email_user]['Caronas']:
         if caronas[carona_id]['Data'] == data_remover:
@@ -338,7 +350,7 @@ def remover_carona(caronas, motoristas, email_user):
 
 
 def ver_caronas(email_user, motoristas, caronas,):
-    if email_user not in motoristas or len(motoristas[email_user]['Caronas']) == 0:
+    if  len(motoristas[email_user]['Caronas']) == 0:
         print('VOCÊ AINDA NÃO CADASTROU NENHUMA CARONA!')
     else:
         print('SUAS CARONAS CADASTRADAS:')
@@ -348,7 +360,7 @@ def ver_caronas(email_user, motoristas, caronas,):
 
 
 def relatorio_totalizador(email_user, motoristas, caronas,):
-    if email_user not in motoristas or len(motoristas[email_user]['Caronas']) == 0:
+    if len(motoristas[email_user]['Caronas']) == 0:
         print('VOCÊ AINDA NÃO CADASTROU NENHUMA CARONA!')
     else:
         print('SUAS CARONAS CADASTRADAS:')
@@ -359,23 +371,20 @@ def relatorio_totalizador(email_user, motoristas, caronas,):
             if len(carona['Passageiros']) != 0:
                 totalizador += float(carona['Valor'])
                 print(f'VALOR DE TODAS AS CARONAS R${totalizador}')
+        relatorio = input('DESEJA SALVAR ESSE RELATORIO EM UM ARQUIVO?[S/N]: ').upper()[0].strip()
+        while relatorio not in 'SN':
+            print('DIGITE UMA OPÇÃO VÁLIDA!')
             relatorio = input('DESEJA SALVAR ESSE RELATORIO EM UM ARQUIVO?[S/N]: ').upper()[0].strip()
-            while relatorio not in 'SN':
-                print('DIGITE UMA OPÇÃO VÁLIDA!')
-                relatorio = input('DESEJA SALVAR ESSE RELATORIO EM UM ARQUIVO?[S/N]: ').upper()[0].strip()
-            if relatorio == 'S':
-                salvar_relatorio(motoristas, email_user, caronas)
-                print('OBRIGADO POR SALVAR!')
-            elif relatorio == 'N':
-                return False
+        if relatorio == 'S':
+            salvar_relatorio(motoristas, email_user, caronas)
+            print('OBRIGADO POR SALVAR!')
+        elif relatorio == 'N':
+            return False
 
 
 
 
 def ver_reservas(usuarios, email_user, caronas, motoristas):
-    if email_user in motoristas:
-        print('VOCÊ NÃO PODE VER AS RESERVAS DOS PASSAGEIROS')
-        return False
     if not usuarios[email_user]['Reservas']:
         print('VOCÊ NÃO TEM NENHUMA CARONA RESERVADA.')
     else:
@@ -390,9 +399,6 @@ def ver_reservas(usuarios, email_user, caronas, motoristas):
 
 
 def finalizar_carona(caronas, motoristas, email_user):
-    if email_user not in motoristas:
-        print('VOCÊ PRECISA SER UM MOTORISTA PARA FINALIZAR UMA CARONA!')
-        return False
     finalizar = input('DIGITE O ID DA CARONA QUE DESEJA FINALIZAR: ').strip()
     if not finalizar.isdigit():
         print('ID INVÁLIDO!')
@@ -404,20 +410,20 @@ def finalizar_carona(caronas, motoristas, email_user):
     if finalizar not in motoristas[email_user]['Caronas']:
         print('ESSA CARONA NÃO É SUA!')
         return False
-    print('      /|||\\_______\\', flush=True)
-    print('     |             | []\\__', flush=True)
-    print('     |     RDZ     |       )', flush=True)
-    print('    .=--(o)--(o)------(o)--=', flush=True)
+    print('      /|||\\_______\\')
+    print('     |             | []\\__')
+    print('     |     RDZ     |       )')
+    print('    .=--(o)--(o)------(o)--=')
     time.sleep(0.7)
-    print('       /|||\\_______\\', flush=True)
-    print('      |             | []\\__', flush=True)
-    print('      |     RDZ     |       )', flush=True)
-    print('    ..=--(o)--(o)------(o)--=', flush=True)
+    print('       /|||\\_______\\')
+    print('      |             | []\\__')
+    print('      |     RDZ     |       )')
+    print('    ..=--(o)--(o)------(o)--=')
     time.sleep(0.7)
-    print('        /|||\\_______\\', flush=True)
-    print('       |             | []\\__', flush=True)
-    print('       |     RDZ     |       )', flush=True)
-    print('    ...=--(o)--(o)------(o)--=', flush=True)
+    print('        /|||\\_______\\')
+    print('       |             | []\\__')
+    print('       |     RDZ     |       )')
+    print('    ...=--(o)--(o)------(o)--=')
     motoristas[email_user]['Caronas'].remove(finalizar)
     del caronas[finalizar]
     print('CARONA FINALIZADA COM SUCESSO!')
@@ -454,9 +460,13 @@ def login_adm(adm):
     else:
         return False
 
-def remover_usuario(usuarios):
+def remover_usuario(usuarios, caronas):
     apagar_usuario = input('DIGITE O EMAIL DO USUARIO QUE VOCÊ QUER REMOVER: ').strip()
     if apagar_usuario in usuarios:
+        for carona_id in list(caronas):
+            if apagar_usuario in caronas[carona_id]['Passageiros']:
+                caronas[carona_id]['Passageiros'].remove(apagar_usuario)
+                caronas[carona_id]['Vagas'] += 1
         del usuarios[apagar_usuario]
         file1 = open('Usuarios.txt', 'w')
         for email in usuarios:
@@ -476,6 +486,6 @@ def cadastrar_motorista(usuarios, motoristas):
         print('ESSE USUARIO NÃO EXISTE')
         return False
     else:
-        motoristas[cadastro_motorista] = {'Nome': usuarios[cadastro_motorista]['Nome'], 'Caronas': []}
+        motoristas[cadastro_motorista] = {'Nome': usuarios[cadastro_motorista]['Nome'], 'Senha': usuarios[cadastro_motorista]['Senha'], 'Caronas': []}
         print('AGORA ESSE USUARIO É UM MOTORISTA')
         return True
