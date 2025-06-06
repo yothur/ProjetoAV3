@@ -464,9 +464,10 @@ def remover_usuario(usuarios, caronas):
     apagar_usuario = input('DIGITE O EMAIL DO USUARIO QUE VOCÊ QUER REMOVER: ').strip()
     if apagar_usuario in usuarios:
         for carona_id in list(caronas):
-            if apagar_usuario in caronas[carona_id]['Passageiros']:
-                caronas[carona_id]['Passageiros'].remove(apagar_usuario)
-                caronas[carona_id]['Vagas'] += 1
+            apagar = caronas[carona_id]
+            if apagar_usuario in apagar['Passageiros']:
+                apagar['Passageiros'].remove(apagar_usuario)
+                apagar['Vagas'] += 1
         del usuarios[apagar_usuario]
         file1 = open('Usuarios.txt', 'w')
         for email in usuarios:
@@ -474,7 +475,8 @@ def remover_usuario(usuarios, caronas):
             linha = f'{u['Email']};{u['Senha']};{u['Nome']}\n'
             file1.write(linha)
         file1.close()
-        print(f'USUARIO DELETADO COM SUCESSO, SOBROU{usuarios}')
+        print(f'USUARIO DELETADO COM SUCESSO, SOBROU {usuarios}')
+        return True
     else:
         print('ESSE USUARIO NÃO EXISTE')
         return False
