@@ -188,9 +188,6 @@ def validar_valor(valor):
     if valor == '':
         print('VOCÊ NÃO DIGITOU O VALOR!')
         return False
-    if ',' in valor:
-        print('USE PONTO NO LUGAR DA VIRGULA')
-        return False
     ponto = 0
     for caractere in valor:
         if caractere == '.':
@@ -198,7 +195,7 @@ def validar_valor(valor):
             if ponto > 1:
                 print('VALOR INVÁLIDO! USE APENAS UM PONTO DECIMAL.')
                 return False
-        elif caractere not in '0123456789':
+        elif not caractere.isdigit():
             print('VALOR INVÁLIDO! USE APENAS NÚMEROS.')
             return False
     if valor[0] == '.' or valor[-1] == '.':
