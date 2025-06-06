@@ -237,20 +237,30 @@ def encontrar_carona(caronas,usuarios,email_user,motoristas):
         dados = caronas[carona_ld]
         if dados['Local'] == buscar_local and dados['Destino'] == buscar_destino:
             print('TEM CARONAS DISPONÍVEIS!')
-            detalhes=input('GOSTARIA DE VER OS DETALHES?[S/N]: ').upper()[0].strip()
-            while detalhes not in 'SN':
-                print('DIGITE UMA OPÇÃO VÁLIDA!')
-                detalhes = input('GOSTARIA DE VER OS DETALHES?[S/N]: ').upper()[0].strip()
-            if detalhes == 'S':
+            while True:
+                detalhes=input('GOSTARIA DE VER OS DETALHES?[S/N]: ').upper().strip()
+                if detalhes == '':
+                    print('VOCÊ PRECISA DIGITAR ALGO!')
+                    continue
+                if detalhes[0] not in 'SN':
+                    print('DIGITE UMA OPÇÃO VÁLIDA!')
+                    continue
+                break
+            if detalhes[0] == 'S':
                 for carona_id2 in caronas:
                     d=caronas[carona_id2]
                     if d['Local'] == buscar_local and d['Destino'] == buscar_destino:
                         print(f'ID: {carona_id2} |Email Do Motorista: {d['Motorista']} | Origem: {d['Local']} | Destino: {d['Destino']} | Data: {d['Data']} | Horário: {d['Horario']}h | Vagas: {d['Vagas']} | Valor: R${d['Valor']} | Motorista: {motoristas[d['Motorista']]['Nome']}')
-                reservar = input('GOSTARIA DE RESERVAR UMA DESTAS CARONAS?[S/N]: ').upper()[0].strip()
-                while reservar not in 'SN':
-                    print('DIGITE UMA OPÇÃO VÁLIDA!')
-                    reservar = input('GOSTARIA DE RESERVAR UMA DESTAS CARONAS?[S/N]: ').upper()[0].strip()
-                if reservar=='S':
+                while True:
+                    reservar = input('GOSTARIA DE RESERVAR UMA DESTAS CARONAS?[S/N]: ').upper().strip()
+                    if reservar == '':
+                        print('VOCÊ PRECISA DIGITAR ALGO!')
+                        continue
+                    if reservar[0] not in 'SN':
+                        print('DIGITE UMA OPÇÃO VÁLIDA!')
+                        continue
+                    break
+                if reservar[0] == 'S':
                     id_reserva = input('DIGITE O ID DA CARONA QUE DESEJA RESERVAR: ').strip()
                     if not id_reserva.isdigit():
                         print('ID INVÁLIDO! DEVE SER UM NÚMERO INTEIRO.')
@@ -298,9 +308,9 @@ def encontrar_carona(caronas,usuarios,email_user,motoristas):
                         caronas[id_reserva_int]['Passageiros'].append(email_user)
                         print(f'CARONA RESERVADA COM SUCESSO PARA {usuarios[email_user]['Nome'].upper()}')
                         print(f'TROCO: R${troco:.2f}')
-                elif reservar == 'N':
+                elif reservar[0] == 'N':
                     return False
-            elif detalhes == 'N':
+            elif detalhes[0] == 'N':
                 return False
             return True
     print('NÃO TEM CARONAS PARA ESSES LOCAIS!')
@@ -427,23 +437,29 @@ def finalizar_carona(caronas, motoristas, email_user):
 
 
 def tirar_foto():
-    foto = input('GOSTARIA DE TIRAR UMA FOTO?[S/N] (A FOTO SERA TIRADA ASSIM QUE VOCÊ DIGITAR [S]): ').upper().strip()
-    while foto not in 'SN':
-        print('DIGITE UMA OPÇÃO VÁLIDA!')
+    while True:
         foto = input('GOSTARIA DE TIRAR UMA FOTO?[S/N] (A FOTO SERA TIRADA ASSIM QUE VOCÊ DIGITAR [S]): ').upper().strip()
-    if foto == 'S':
+        if foto == '':
+            print('VOCÊ PRECISA DIGITAR ALGO!')
+            continue
+        if foto[0] not in 'SN':
+            print('DIGITE UMA OPÇÃO VÁLIDA!')
+            continue
+        break
+    if foto[0] == 'S':
         print('TIRANDO FOTO...')
         cam = cv2.VideoCapture(0)
         resultado, imagem = cam.read()
         cam.release()
+        foto = 0
         if resultado:
-            agora = datetime.now().strftime("%Y%m%d_%H%M%S")
-            nome_arquivo = f"foto_{agora}.jpg"
+            foto += 1
+            nome_arquivo = f"foto_{foto}.jpg"
             cv2.imwrite(nome_arquivo, imagem)
             cv2.waitKey(1000)
             cv2.destroyAllWindows()
             return True
-    else:
+    elif foto[0] == 'N':
         print('TUDO BEM!')
         return False
 

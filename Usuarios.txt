@@ -1,2 +1,3 @@
+rene@gmail.com;rene12345;rene de sousa
 mrarthur@gmail.com;arthur12345;arthur
 igris@gmail.com;igritochad;igrito
