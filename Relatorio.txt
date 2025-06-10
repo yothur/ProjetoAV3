@@ -1,4 +1,6 @@
-ID: 1 | Origem: 1 | Destino: 2 | Data: 23/02/2025 | Horário: 23:59h | Vagas: 22 | Valor: R$23 | Passageiros: ['rene@gmail.com'] | Total: R$23.0
+ID: 1 | Origem: 1 | Destino: 2 | Data: 23/02/2025 | Horï¿½rio: 23:59h | Vagas: 22 | Valor: R$23 | Passageiros: ['rene@gmail.com'] | Total: R$23.0
 VALOR DE TODAS AS CARONAS R$23.0
-ID: 2 | Origem: 2 | Destino: 3 | Data: 24/02/2025 | Horário: 23:59h | Vagas: 22 | Valor: R$23 | Passageiros: ['rene@gmail.com'] | Total: R$23.0
+ID: 2 | Origem: 2 | Destino: 3 | Data: 23/04/2025 | Horï¿½rio: 23:59h | Vagas: 23 | Valor: R$23 | Passageiros: [] | Total: R$0.0
+VALOR DE TODAS AS CARONAS R$23.0
+ID: 3 | Origem: 5 | Destino: 6 | Data: 23/05/2025 | Horï¿½rio: 23:59h | Vagas: 22 | Valor: R$23 | Passageiros: ['rene@gmail.com'] | Total: R$23.0
 VALOR DE TODAS AS CARONAS R$46.0
