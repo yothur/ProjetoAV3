@@ -436,34 +436,6 @@ def finalizar_carona(caronas, motoristas, email_user):
     print('CARONA FINALIZADA COM SUCESSO!')
 
 
-def tirar_foto():
-    while True:
-        foto = input('GOSTARIA DE TIRAR UMA FOTO?[S/N] (A FOTO SERA TIRADA ASSIM QUE VOCÊ DIGITAR [S]): ').upper().strip()
-        if foto == '':
-            print('VOCÊ PRECISA DIGITAR ALGO!')
-            continue
-        if foto[0] not in 'SN':
-            print('DIGITE UMA OPÇÃO VÁLIDA!')
-            continue
-        break
-    if foto[0] == 'S':
-        print('TIRANDO FOTO...')
-        cam = cv2.VideoCapture(0)
-        resultado, imagem = cam.read()
-        cam.release()
-        foto = 0
-        if resultado:
-            foto += 1
-            nome_arquivo = f"foto_{foto}.jpg"
-            cv2.imwrite(nome_arquivo, imagem)
-            cv2.waitKey(1000)
-            cv2.destroyAllWindows()
-            return True
-    elif foto[0] == 'N':
-        print('TUDO BEM!')
-        return False
-
-
 def login_adm(adm):
     email_adm = input('DIGITE O EMAIL DE ADMIN: ').strip()
     senha_adm = input('DIGITE SUA SENHA DE ADMIN: ').strip()
