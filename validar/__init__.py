@@ -1,7 +1,5 @@
 import time
 from arquivos import salvar_relatorio
-import cv2
-from datetime import datetime
 
 def validar_nome(nome):
     nao_pode = ['(', ')', '[', ']', '{', '}', '<', '>', ',', ';', ':', '\\', '"', "'", '`', '\t', '\n', '!', '#',
@@ -444,6 +442,7 @@ def login_adm(adm):
         return True
     else:
         return False
+
 
 def remover_usuario(usuarios, caronas):
     apagar_usuario = input('DIGITE O EMAIL DO USUARIO QUE VOCÊ QUER REMOVER: ').strip()
