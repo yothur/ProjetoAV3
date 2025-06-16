@@ -6,6 +6,7 @@ def salvar_usuarios(usuarios):
         file.write(linha)
     file.close()
 
+
 def carregar_usuarios(usuarios):
     file = open('Usuarios.txt', 'r')
     linhas = file.readlines()
@@ -16,6 +17,7 @@ def carregar_usuarios(usuarios):
         senha = partes[1]
         nome = partes[2]
         usuarios[email] = {'Email': email, 'Senha': senha, 'Nome': nome, 'Reservas':[]}
+
 
 def salvar_relatorio(motoristas, email_user, caronas):
     totalizador = 0
@@ -28,6 +30,7 @@ def salvar_relatorio(motoristas, email_user, caronas):
             total = f'VALOR DE TODAS AS CARONAS R${totalizador}\n'
             file2.write(texto2)
             file2.write(total)
+
         elif len(carona['Passageiros']) == 0:
             totalizador += 0
             total1 = f'VALOR DE TODAS AS CARONAS R${totalizador}\n'

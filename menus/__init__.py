@@ -18,6 +18,7 @@ def menu1():
         print()
         if op.isdigit():
             return int(op)
+
         else:
             print('OPÇÃO INVÁLIDA! DIGITE 0, 1, 2, 3 OU 4.')
 
@@ -42,6 +43,7 @@ def menu2():
         print()
         if op2.isdigit():
             return int(op2)
+
         else:
             print('OPÇÃO INVÁLIDA! DIGITE 0, 1, 2, 3, OU 4.')
 
@@ -67,6 +69,7 @@ def menu3():
         print()
         if op3.isdigit():
             return int(op3)
+
         else:
             print('OPÇÃO INVÁLIDA! DIGITE 0, 1, 2, 3, 4, OU 5.')
 
@@ -90,5 +93,6 @@ def menu4():
         print()
         if op4.isdigit():
             return int(op4)
+
         else:
             print('OPÇÃO INVÁLIDA! DIGITE O, 1 OU 2.')

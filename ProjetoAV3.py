@@ -1,6 +1,8 @@
 from validar import *
 from menus import *
 from arquivos import *
+
+
 usuarios = {'rene@gmail.com':{'Email': 'rene@gmail.com','Senha': 'rene12345', 'Nome': 'rene de sousa', 'Reservas': []}, 'mrarthur@gmail.com':{'Email': 'mrarthur@gmail.com','Senha': 'arthur12345', 'Nome': 'arthur', 'Reservas': []}}
 arquivo = open('Usuarios.txt', 'a')
 arquivo.close()
@@ -9,6 +11,8 @@ adm = {'mrarthur@gmail.com':{'Email': 'mrarthur@gmail.com','Senha': 'arthur12345
 caronas = {}
 motoristas = {'igris@gmail.com': {'Nome': 'igrito', 'Senha': 'igritochad', 'Caronas': []}, 'mrarthur@gmail.com': {'Nome': 'arthur', 'Senha': 'arthur12345', 'Caronas':[]}}
 carona_id = 1
+
+
 while True:
     op = menu1()
     if op == 1:
